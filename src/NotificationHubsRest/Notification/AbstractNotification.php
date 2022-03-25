@@ -7,7 +7,7 @@ abstract class AbstractNotification implements NotificationInterface
     const SCHEDULE_TIME_FORMAT = 'Y-m-d\TH:i:s';
 
     /**
-     * @var tring|array
+     * @var string|array
      */
     protected $alert;
 

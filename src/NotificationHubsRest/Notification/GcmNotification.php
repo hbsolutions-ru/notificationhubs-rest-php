@@ -36,7 +36,12 @@ class GcmNotification extends AbstractNotification
      */
     public function getPayload()
     {
+        $customPayloadData = null;
+
         if (!empty($this->options)) {
+            if (!empty($this->options['custom-payload-data']) && is_array($this->options['custom-payload-data'])) {
+                $customPayloadData = $this->options['custom-payload-data'];
+            }
             $payload = array_intersect_key($this->options, array_fill_keys($this->supportedOptions, 0));
         } else {
             $payload = [];
@@ -48,6 +53,10 @@ class GcmNotification extends AbstractNotification
             $payload += ['data' => ['message' => $this->alert]];
         } else {
             throw new \RuntimeException('Invalid alert.');
+        }
+
+        if (!empty($customPayloadData)) {
+            $payload += $customPayloadData;
         }
 
         return json_encode($payload);
